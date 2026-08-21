@@ -360,8 +360,9 @@ class Slice(  # pylint: disable=too-many-public-methods
         # FAB list view renders this raw HTML; use url_for so Flask prepends
         # SCRIPT_NAME (the application_root). `Slice.url` itself stays router-
         # relative so frontend callers can apply ensureAppRoot exactly once.
-        href = url_for("ExploreView.root", slice_id=self.id)
-        return Markup(f'<a href="{href}">{name}</a>')
+        href = escape(url_for("ExploreView.root", slice_id=self.id))
+        # S704: name and href are escaped above.
+        return Markup(f'<a href="{href}">{name}</a>')  # noqa: S704
 
     @property
     def icons(self) -> str:

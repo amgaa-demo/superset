@@ -293,7 +293,8 @@ class Dashboard(CoreDashboard, SoftDeleteMixin, AuditMixinNullable, ImportExport
         href = escape(
             url_for("Superset.dashboard", dashboard_id_or_slug=self.slug or self.id)
         )
-        return Markup(f'<a href="{href}">{title}</a>')
+        # S704: title and href are escaped above.
+        return Markup(f'<a href="{href}">{title}</a>')  # noqa: S704
 
     @property
     def digest(self) -> str | None:
